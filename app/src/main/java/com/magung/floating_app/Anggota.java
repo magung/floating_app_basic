@@ -2,16 +2,15 @@ package com.magung.floating_app;
 
 public class Anggota {
     String nama, kelas, status;
-    boolean teknologi, lain, kesehatan, kuliner,
+    boolean teknologi, lain, kuliner,
             keuangan, ekonomi, arsitektur;
 
-    public Anggota(String nama, String kelas, String status, boolean teknologi, boolean lain, boolean kesehatan, boolean kuliner, boolean keuangan, boolean ekonomi, boolean arsitektur) {
+    public Anggota(String nama, String kelas, String status, boolean teknologi, boolean lain, boolean kuliner, boolean keuangan, boolean ekonomi, boolean arsitektur) {
         this.nama = nama;
         this.kelas = kelas;
         this.status = status;
         this.teknologi = teknologi;
         this.lain = lain;
-        this.kesehatan = kesehatan;
         this.kuliner = kuliner;
         this.keuangan = keuangan;
         this.ekonomi = ekonomi;
@@ -56,14 +55,6 @@ public class Anggota {
 
     public void setLain(boolean lain) {
         this.lain = lain;
-    }
-
-    public boolean isKesehatan() {
-        return kesehatan;
-    }
-
-    public void setKesehatan(boolean kesehatan) {
-        this.kesehatan = kesehatan;
     }
 
     public boolean isKuliner() {

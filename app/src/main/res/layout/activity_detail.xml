@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".DetailActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -28,14 +31,13 @@
 
         <RadioGroup
             android:id="@+id/rg_kelas"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rd_IK"
+                android:id="@+id/rb_IK"
                 android:layout_weight="1"
                 android:checked="true"
                 android:text="Inf. Komputer"/>
@@ -43,7 +45,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rd_TI"
+                android:id="@+id/rb_TI"
                 android:layout_weight="1"
                 android:text="Tek. Komputer"/>
 
@@ -75,6 +77,14 @@
                 android:layout_column="2"
                 android:layout_marginLeft="15dp"/>
 
+            <CheckBox
+                android:id="@+id/cb_ekonomi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ekonomi"
+                android:layout_column="3"
+                android:layout_marginLeft="15dp"/>
+
         </TableRow>
 
         <TableRow>
@@ -93,17 +103,6 @@
                 android:text="Arsitektur"
                 android:layout_column="2"
                 android:layout_marginLeft="15dp"/>
-
-        </TableRow>
-
-        <TableRow>
-
-            <CheckBox
-                android:id="@+id/cb_ekonomi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ekonomi"
-                android:layout_column="1"/>
 
             <CheckBox
                 android:id="@+id/cb_lain"
@@ -129,4 +128,10 @@
         android:layout_height="wrap_content"
         android:entries="@array/status_bekerja">
     </Spinner>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_update"
+        android:text="Update"/>
 </LinearLayout>

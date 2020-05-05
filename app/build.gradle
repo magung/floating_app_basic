@@ -43,10 +43,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //============
-    implementation 'com.github.bumptech.glide:glide:4.10.0'//glide
-    implementation 'androidx.recyclerview:recyclerview:1.1.0' //recyclerview
-    implementation 'de.hdodenhof:circleimageview:2.1.0' //cirlceimageview
-    implementation 'com.jakewharton:butterknife:10.2.1'//butter
+    implementation 'com.google.code.gson:gson:2.8.6' //GSON
+
+    implementation 'com.google.android.material:material:1.0.0-rc01' // material
+
+    //butter knife
+    implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    //recyclerview
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
     //============
 }

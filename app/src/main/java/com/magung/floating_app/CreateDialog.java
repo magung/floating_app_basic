@@ -1,8 +1,11 @@
 package com.magung.floating_app;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -37,11 +42,13 @@ public class CreateDialog extends DialogFragment {
 
     Unbinder unbinder;
     RecyclerView rvObject;
+    Activity activity;
     ArrayList<Anggota> anggotaArrayList = new ArrayList<>();
 
     //definisikan recyclerview yang akan digunakan dan dara lemparan dari MainActivity ( agar bisa ditambahakan datanya )
-    public CreateDialog(RecyclerView rvObject, ArrayList<Anggota> anggotaArrayList) {
+    public CreateDialog(RecyclerView rvObject, Activity activity, ArrayList<Anggota> anggotaArrayList) {
         this.rvObject = rvObject;
+        this.activity = activity;
         this.anggotaArrayList = anggotaArrayList;
     }
 
@@ -82,6 +89,12 @@ public class CreateDialog extends DialogFragment {
                                         lain, kuliner,
                                         keuangan, ekonomi, arsitektur)
                         );
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+                        SharedPreferences.Editor editor = prefs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(anggotaArrayList);
+                        editor.putString("sp_list_anggota", json);
+                        editor.apply();
 
                         new MainActivity().viewRecyclerView(rvObject, anggotaArrayList);
 

@@ -1,27 +1,47 @@
 package com.magung.floating_app;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
-    private Context context;
+public class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
+    Activity activity;
+    Context context;
     ArrayList<Anggota> anggotaArrayList;
 
-    public RvAdapter(Context context, ArrayList<Anggota> anggotaArrayList) {
+//    public RvAdapter(Activity activity, ArrayList<Anggota> anggotaArrayList) {
+//        this.activity = activity;
+//        this.anggotaArrayList = anggotaArrayList;
+//    }
+
+    //public RvAdapter(Context context, ArrayList<Anggota> anggotaArrayList) {
+    public RvAdapter(Context context, Activity activity, ArrayList<Anggota> anggotaArrayList) {
         this.context = context;
+        this.activity = activity;
+        UpdateData(anggotaArrayList);
+    }
+
+    private void UpdateData(ArrayList<Anggota> anggotaArrayList){
         this.anggotaArrayList = anggotaArrayList;
     }
 
@@ -50,6 +70,7 @@ class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
 
         holder.tvNama.setText(nama);
         holder.tvKelas.setText(kelas);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,16 +87,56 @@ class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
                 b.putBoolean("b_keuangan", keuangan);
                 b.putBoolean("b_kuliner", kuliner);
                 b.putBoolean("b_lain", lain);
+                b.putInt("posisi", position);
 
-                //buka detail activity
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                intent.putExtras(b);
-                view.getContext().startActivity(intent);
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Log.i ("test", nama);
 
+                        new AlertDialog.Builder(view.getContext())
+                                .setTitle("Tentukan Aksimu")
+                                .setMessage(nama)
+                                .setCancelable(true)
+                                .setNegativeButton("Hapus", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        anggotaArrayList.remove(position); //hapus baris anggota list
+//                                        notifyItemRemoved(position); //refresh anggota list
+                                        notifyDataSetChanged();
+                                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+                                        SharedPreferences.Editor editor = prefs.edit();
+                                        Gson gson = new Gson();
+                                        String json = gson.toJson(anggotaArrayList);
+                                        editor.putString("sp_list_anggota", json);
+                                        editor.apply();
+                                    }
+                                })
+                                .setPositiveButton("Lihat", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Intent intent = new Intent( view.getContext(), DetailActivity.class);
+                                        intent.putExtras(b);
+                                        view.getContext().startActivity(intent);
+                                    }
+                                })
+                                .setNeutralButton("Tutup", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss(); //tutup dialog
+                                    }
+                                })
+                                .show();
+
+                        return false;
+                    }
+                });
 
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -83,8 +144,7 @@ class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_nama)
-        TextView tvNama;
+        @BindView(R.id.tv_nama) TextView tvNama;
         @BindView(R.id.tv_kelas) TextView tvKelas;
 
         public CardViewHolder(@NonNull View itemView) {
@@ -92,4 +152,7 @@ class RvAdapter extends RecyclerView.Adapter<RvAdapter.CardViewHolder> {
             ButterKnife.bind(this, itemView);
         }
     }
+
+
+
 }

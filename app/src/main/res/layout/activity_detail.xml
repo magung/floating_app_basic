@@ -32,7 +32,8 @@
         <RadioGroup
             android:id="@+id/rg_kelas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -134,4 +135,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/bt_update"
         android:text="Update"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_hapus"
+        android:text="Hapus"/>
+
 </LinearLayout>
